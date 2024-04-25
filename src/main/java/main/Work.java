@@ -11,4 +11,7 @@ public class Work
 	public long incrementSeconds()
 	{ return ++seconds;}
 
+	public Rest rest()
+	{ return null; }
+
 }
