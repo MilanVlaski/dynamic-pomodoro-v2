@@ -34,13 +34,15 @@ public class TestTimer
 			assertThat(work.incrementSeconds()).isEqualTo(1);
 		}
 		
-//		@Test
-//		void RestsForFiveSecondsAfterWorksTwentyFive()
-//		{
-//			Work work = timer.start(anyTime);
-//			Rest rest = work.rest();
-//			assertThat(rest.seconds()).isEqualTo(5);
-//		}
+		@Test
+		void RestLastsFiveSecondsAfterWorksTwentyFive()
+		{
+			LocalTime twentyFiveSecLater = anyTime.plusSeconds(25);
+			
+			Work work = timer.start(anyTime);
+			Rest rest = work.rest(twentyFiveSecLater);
+			assertThat(rest.seconds()).isEqualTo(5);
+		}
 	}
 
 }
