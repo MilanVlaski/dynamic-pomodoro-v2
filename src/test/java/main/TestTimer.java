@@ -23,14 +23,14 @@ public class TestTimer
 		{ timer = new Timer(); }
 
 		@Test
-		void Begin_sWork()
+		void Begins_Work()
 		{
 			Work work = timer.start(anyTime);
 			assertThat(work.seconds()).isEqualTo(0);
 		}
 
 		@Test
-		void Work_Moves_Seconds_Forward()
+		void Seconds_Passed_Increase_While_Working()
 		{
 			Work work = timer.start(anyTime);
 			assertThat(work.incrementSeconds()).isEqualTo(1);
@@ -52,7 +52,7 @@ public class TestTimer
 			}
 
 			@Test
-			void Moves_Seconds_Down()
+			void Seconds_Passed_Decrease()
 			{
 				Rest rest = new Rest(anyTime, twentyFiveSeconds);
 				assertThat(rest.incrementSeconds()).isEqualTo(4);
