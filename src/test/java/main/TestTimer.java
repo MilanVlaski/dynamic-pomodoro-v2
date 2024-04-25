@@ -2,25 +2,33 @@ package main;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class TestTimer
 {
 
-	@Test
-	void TimerBeginsWork()
+	@Nested
+	class _Timer
 	{
-		var timer = new Timer();
-		Work work = timer.start();
-		assertThat(work.seconds()).isEqualTo(0);
+		Timer timer;
+
+		@BeforeEach
+		void setup()
+		{ timer = new Timer(); }
+
+		@Test
+		void TimerBeginsWork()
+		{
+			Work work = timer.start();
+			assertThat(work.seconds()).isEqualTo(0);
+		}
+
+		@Test
+		void TimerMovesSecondsForward()
+		{
+			Work work = timer.start();
+			assertThat(work.incrementSeconds()).isEqualTo(1);
+		}
 	}
-	
-	@Test
-	void minga()
-	{
-		var timer = new Timer();
-		Work work = timer.start();
-		work.incrementSeconds();
-		assertThat(work.seconds()).isEqualTo(1);
-	}
+
 }

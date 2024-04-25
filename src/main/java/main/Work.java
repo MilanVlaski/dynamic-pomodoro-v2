@@ -8,7 +8,7 @@ public class Work
 	public long seconds()
 	{ return seconds; }
 
-	public void incrementSeconds()
-	{ seconds++; }
+	public long incrementSeconds()
+	{ return ++seconds;}
 
 }
