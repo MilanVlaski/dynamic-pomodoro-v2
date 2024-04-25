@@ -10,15 +10,18 @@ public class Work
 	private final LocalTime start;
 
 	Work(LocalTime now)
-	{this.start = now;}
+	{ this.start = now; }
 
 	public long seconds()
 	{ return seconds; }
 
 	public long incrementSeconds()
-	{ return ++seconds;}
+	{ return ++seconds; }
 
 	public Rest rest(LocalTime now)
-	{ return new Rest(now, Duration.between(start, now)); }
+	{
+		var workDuration = Duration.between(start, now);
+		return new Rest(now, workDuration);
+	}
 
 }

@@ -35,7 +35,7 @@ public class TestTimer
 		}
 		
 		@Test
-		void RestLastsFiveSecondsAfterWorksTwentyFive()
+		void RestLastsFiveSecondsAfterWorksForTwentyFive()
 		{
 			LocalTime twentyFiveSecLater = anyTime.plusSeconds(25);
 			
