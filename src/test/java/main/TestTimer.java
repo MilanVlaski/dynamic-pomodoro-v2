@@ -52,10 +52,17 @@ public class TestTimer
 			}
 
 			@Test
-			void Seconds_Passed_Decrease()
+			void Seconds_Decrease()
 			{
 				Rest rest = new Rest(anyTime, twentyFiveSeconds);
-				assertThat(rest.incrementSeconds()).isEqualTo(4);
+				assertThat(rest.decrementSeconds()).isEqualTo(4);
+			}
+
+			@Test
+			void Seconds_Dont_Decrease_Past_Zero()
+			{
+				Rest rest = new Rest(anyTime, Duration.ZERO);
+				assertThat(rest.decrementSeconds()).isEqualTo(0);
 			}
 
 			@Test
@@ -65,12 +72,6 @@ public class TestTimer
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
 
-			@Test
-			void Seconds_Dont_Decrease_Past_Zero()
-			{
-				Rest rest = new Rest(anyTime, Duration.ZERO);
-				assertThat(rest.incrementSeconds()).isEqualTo(0);
-			}
 
 		}
 

@@ -5,7 +5,6 @@ import java.time.LocalTime;
 
 public class Rest
 {
-
 	private long seconds;
 
 	public Rest(LocalTime now, Duration workDuration)
@@ -14,7 +13,7 @@ public class Rest
 	public long seconds()
 	{ return seconds; }
 
-	public long incrementSeconds()
+	public long decrementSeconds()
 	{
 		if (seconds != 0)
 			seconds--;
