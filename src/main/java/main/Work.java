@@ -3,7 +3,12 @@ package main;
 public class Work
 {
 
+	private long seconds;
+
 	public long seconds()
-	{ return 0; }
+	{ return seconds; }
+
+	public void incrementSeconds()
+	{ seconds++; }
 
 }

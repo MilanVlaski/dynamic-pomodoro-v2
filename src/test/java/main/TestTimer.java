@@ -14,4 +14,13 @@ public class TestTimer
 		Work work = timer.start();
 		assertThat(work.seconds()).isEqualTo(0);
 	}
+	
+	@Test
+	void minga()
+	{
+		var timer = new Timer();
+		Work work = timer.start();
+		work.incrementSeconds();
+		assertThat(work.seconds()).isEqualTo(1);
+	}
 }
