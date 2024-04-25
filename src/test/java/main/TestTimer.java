@@ -1,10 +1,10 @@
 package main;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.*;
 
@@ -39,7 +39,7 @@ public class TestTimer
 		@Nested
 		class _Rest
 		{
-			Duration twentyFiveSeconds = Duration.of(25, ChronoUnit.SECONDS);
+			Duration twentyFiveSeconds = Duration.of(25, SECONDS);
 
 			@Test
 			void Lasts_Five_Seconds_After_Works_For_Twenty_Five()
@@ -56,6 +56,20 @@ public class TestTimer
 			{
 				Rest rest = new Rest(anyTime, twentyFiveSeconds);
 				assertThat(rest.incrementSeconds()).isEqualTo(4);
+			}
+
+			@Test
+			void Lasts_Zero_Seconds_If_Has_Not_Worked()
+			{
+				Rest rest = new Rest(anyTime, Duration.ZERO);
+				assertThat(rest.seconds()).isEqualTo(0);
+			}
+
+			@Test
+			void Seconds_Dont_Decrease_Past_Zero()
+			{
+				Rest rest = new Rest(anyTime, Duration.ZERO);
+				assertThat(rest.incrementSeconds()).isEqualTo(0);
 			}
 
 		}
