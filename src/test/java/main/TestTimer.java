@@ -23,36 +23,43 @@ public class TestTimer
 		{ timer = new Timer(); }
 
 		@Test
-		void BeginsWork()
+		void Begin_sWork()
 		{
 			Work work = timer.start(anyTime);
 			assertThat(work.seconds()).isEqualTo(0);
 		}
 
 		@Test
-		void WorkMovesSecondsForward()
+		void Work_Moves_Seconds_Forward()
 		{
 			Work work = timer.start(anyTime);
 			assertThat(work.incrementSeconds()).isEqualTo(1);
 		}
 
-		@Test
-		void RestLastsFiveSecondsAfterWorksForTwentyFive()
-		{
-			LocalTime twentyFiveSecLater = anyTime.plusSeconds(25);
-
-			Work work = timer.start(anyTime);
-			Rest rest = work.rest(twentyFiveSecLater);
-			assertThat(rest.seconds()).isEqualTo(5);
-		}
-
-		@Test
-		void RestMovesSecondsDown()
+		@Nested
+		class _Rest
 		{
 			Duration twentyFiveSeconds = Duration.of(25, ChronoUnit.SECONDS);
-			Rest rest = new Rest(anyTime, twentyFiveSeconds);
-			assertThat(rest.incrementSeconds()).isEqualTo(4);
+
+			@Test
+			void Lasts_Five_Seconds_After_Works_For_Twenty_Five()
+			{
+				LocalTime twentyFiveSecLater = anyTime.plus(twentyFiveSeconds);
+
+				Work work = timer.start(anyTime);
+				Rest rest = work.rest(twentyFiveSecLater);
+				assertThat(rest.seconds()).isEqualTo(5);
+			}
+
+			@Test
+			void Moves_Seconds_Down()
+			{
+				Rest rest = new Rest(anyTime, twentyFiveSeconds);
+				assertThat(rest.incrementSeconds()).isEqualTo(4);
+			}
+
 		}
+
 	}
 
 }
