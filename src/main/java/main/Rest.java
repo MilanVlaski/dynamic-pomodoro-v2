@@ -18,4 +18,7 @@ public class Rest
 	public long seconds()
 	{ return seconds; }
 
+	public long incrementSeconds()
+	{ return --seconds; }
+
 }
