@@ -39,7 +39,6 @@ public class TestTimer
 			assertThat(work.incrementSeconds()).isEqualTo(1);
 		}
 
-		// TODO make this pass, then move the loop into a separate class
 		@Test
 		void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
 		{
