@@ -5,9 +5,8 @@ import java.time.LocalTime;
 
 public class Work
 {
-
-	private long seconds;
 	private final LocalTime start;
+	private long seconds;
 
 	Work(LocalTime now)
 	{ this.start = now; }
