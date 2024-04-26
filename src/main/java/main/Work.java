@@ -21,7 +21,7 @@ public class Work
 	public Rest rest(LocalTime now)
 	{
 		var workDuration = Duration.between(start, now);
-		return new Rest(now, workDuration);
+		return new Rest(workDuration);
 	}
 
 }

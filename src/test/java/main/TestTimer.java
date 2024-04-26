@@ -54,21 +54,21 @@ public class TestTimer
 			@Test
 			void Seconds_Decrease()
 			{
-				Rest rest = new Rest(anyTime, twentyFiveSeconds);
+				Rest rest = new Rest(twentyFiveSeconds);
 				assertThat(rest.decrementSeconds()).isEqualTo(4);
 			}
 
 			@Test
 			void Seconds_Dont_Decrease_Past_Zero()
 			{
-				Rest rest = new Rest(anyTime, Duration.ZERO);
+				Rest rest = new Rest(Duration.ZERO);
 				assertThat(rest.decrementSeconds()).isEqualTo(0);
 			}
 
 			@Test
 			void Lasts_Zero_Seconds_If_Has_Not_Worked()
 			{
-				Rest rest = new Rest(anyTime, Duration.ZERO);
+				Rest rest = new Rest(Duration.ZERO);
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
 
