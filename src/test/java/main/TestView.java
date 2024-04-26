@@ -3,8 +3,6 @@ package main;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalTime;
-
 import org.junit.jupiter.api.Test;
 
 import main.Work.SessionTooLong;
@@ -16,11 +14,23 @@ public class TestView
 	void IncrementsTime_While_Working() throws SessionTooLong
 	{
 		var timer = new Timer();
-		Counter counter = new CountsOnce();
+		Counter counter = new CountsSeconds(1);
 		FakeView view = new FakeView(timer, counter);
 		view.startWorking();
 
 		assertThat(view.seconds).isEqualTo(1);
+	}
+
+	@Test
+	void Shows_Correct_Time_When_Rests_After_Work() throws SessionTooLong
+	{
+		var timer = new Timer();
+		Counter counter = new CountsSeconds(25);
+		FakeView view = new FakeView(timer, counter);
+		view.startWorking();
+		view.startResting(); 
+		
+		assertThat(view.seconds).isEqualTo(5);
 	}
 
 	public class FakeView implements View
@@ -28,7 +38,8 @@ public class TestView
 
 		private final Timer timer;
 		private final Counter counter;
-		
+		private Work work;
+
 		public long seconds;
 
 		public FakeView(Timer timer, Counter counter)
@@ -40,7 +51,7 @@ public class TestView
 		@Override
 		public void startWorking() throws SessionTooLong
 		{
-			Work work = timer.start(LocalTime.now());
+			this.work = timer.start();
 			counter.count(work, this);
 		}
 
@@ -48,12 +59,24 @@ public class TestView
 		public void setTime(long seconds)
 		{ this.seconds = seconds; }
 
+		@Override
+		public void startResting()
+		{}
+
 	}
 
-	class CountsOnce implements Counter
+	class CountsSeconds implements Counter
 	{
+		private final int seconds;
+
+		public CountsSeconds(int seconds)
+		{ this.seconds = seconds; }
+
 		@Override
 		public void count(Work work, View view) throws SessionTooLong
-		{ view.setTime(work.incrementSeconds()); }
+		{
+			for (int i = 0; i < seconds; i++)
+				view.setTime(work.incrementSeconds());
+		}
 	}
 }
