@@ -50,7 +50,7 @@ public class TestTimer
 			assertThatThrownBy(() -> fourHourWork.incrementSeconds())
 			        .isInstanceOf(SessionTooLong.class);
 		}
-
+		
 		@Nested
 		class _Rest
 		{
