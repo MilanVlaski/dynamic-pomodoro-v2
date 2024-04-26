@@ -93,7 +93,7 @@ public class TestTimer
 	}
 
 
-	static class WorkFromTime
+	class WorkFromTime
 	{
 		private final Work work;
 
