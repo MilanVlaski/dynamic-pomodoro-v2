@@ -2,11 +2,14 @@ package main;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.Duration;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.*;
+
+import main.Work.SessionTooLong;
 
 public class TestTimer
 {
@@ -30,10 +33,24 @@ public class TestTimer
 		}
 
 		@Test
-		void Seconds_Passed_Increase_While_Working()
+		void Seconds_Passed_Increase_While_Working() throws SessionTooLong
 		{
 			Work work = timer.start(anyTime);
 			assertThat(work.incrementSeconds()).isEqualTo(1);
+		}
+
+		// TODO make this pass, then move the loop into a separate class
+		@Test
+		void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
+		{
+			Work work = timer.start(anyTime);
+			long fourHours = 60 * 60 * 4;
+
+			for (int i = 0; i < fourHours; i++)
+				work.incrementSeconds();
+
+			assertThatThrownBy(() -> work.incrementSeconds())
+			        .isInstanceOf(SessionTooLong.class);
 		}
 
 		@Nested

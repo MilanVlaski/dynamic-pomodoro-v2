@@ -14,8 +14,11 @@ public class Work
 	public long seconds()
 	{ return seconds; }
 
-	public long incrementSeconds()
-	{ return ++seconds; }
+	public long incrementSeconds() throws SessionTooLong
+	{ 
+		if(seconds >= 60 * 60 * 4)
+			throw new SessionTooLong(); 
+		return ++seconds; }
 
 	public Rest rest(LocalTime now)
 	{
@@ -23,4 +26,9 @@ public class Work
 		return new Rest(workDuration);
 	}
 
+	public class SessionTooLong extends Exception
+	{
+		SessionTooLong()
+		{ super("Session can't last more than four hours!"); }
+	}
 }
