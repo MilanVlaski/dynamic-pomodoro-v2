@@ -46,10 +46,9 @@ public class TestTimer
 			Work work = timer.start(anyTime);
 			long fourHours = 60 * 60 * 4;
 
-			for (int i = 0; i < fourHours; i++)
-				work.incrementSeconds();
+			var fourHourWork = new WorkFromTime(work).of(fourHours);
 
-			assertThatThrownBy(() -> work.incrementSeconds())
+			assertThatThrownBy(() -> fourHourWork.incrementSeconds())
 			        .isInstanceOf(SessionTooLong.class);
 		}
 
@@ -94,4 +93,20 @@ public class TestTimer
 
 	}
 
+
+	static class WorkFromTime
+	{
+		private final Work work;
+
+		public WorkFromTime(Work work)
+		{ this.work = work; }
+
+		Work of(long seconds) throws SessionTooLong
+		{
+			for (int i = 0; i < seconds; i++)
+				work.incrementSeconds();
+			return work;
+		}
+
+	}
 }
