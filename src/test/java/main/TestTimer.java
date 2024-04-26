@@ -40,7 +40,7 @@ public class TestTimer
 		}
 
 		@Test
-		void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
+		void Seconds_Increase_Only_Up_To_Four_Hours_While_Working() throws SessionTooLong
 		{
 			Work work = timer.start(anyTime);
 			long fourHours = 60 * 60 * 4;
