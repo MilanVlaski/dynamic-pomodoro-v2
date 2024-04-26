@@ -3,8 +3,6 @@ package main;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.time.LocalTime;
-
 import org.junit.jupiter.api.*;
 
 import main.Work.SessionTooLong;
@@ -17,38 +15,42 @@ public class TestTimer
 	{
 		Timer timer;
 
-		LocalTime anyTime = LocalTime.MIN;
-
 		@BeforeEach
 		void setup()
 		{ timer = new Timer(); }
 
-		@Test
-		void Begins_Work()
+
+		@Nested
+		class _Work
 		{
-			Work work = timer.start();
-			assertThat(work.seconds()).isEqualTo(0);
+			Work work;
+
+			@BeforeEach
+			void setup()
+			{ work = timer.start(); }
+
+			@Test
+			void Begins_Work()
+			{ assertThat(work.seconds()).isEqualTo(0); }
+
+			@Test
+			void Seconds_Passed_Increase() throws SessionTooLong
+			{ assertThat(work.incrementSeconds()).isEqualTo(1); }
+
+			@Test
+			void Seconds_Increase_Only_Up_To_Four_Hours()
+			        throws SessionTooLong
+			{
+				long fourHours = 60 * 60 * 4;
+
+				var fourHourWork = new WorkFromTime(work).of(fourHours);
+
+				assertThatThrownBy(() -> fourHourWork.incrementSeconds())
+				        .isInstanceOf(SessionTooLong.class);
+			}
 		}
 
-		@Test
-		void Seconds_Passed_Increase_While_Working() throws SessionTooLong
-		{
-			Work work = timer.start();
-			assertThat(work.incrementSeconds()).isEqualTo(1);
-		}
 
-		@Test
-		void Seconds_Increase_Only_Up_To_Four_Hours_While_Working() throws SessionTooLong
-		{
-			Work work = timer.start();
-			long fourHours = 60 * 60 * 4;
-
-			var fourHourWork = new WorkFromTime(work).of(fourHours);
-
-			assertThatThrownBy(() -> fourHourWork.incrementSeconds())
-			        .isInstanceOf(SessionTooLong.class);
-		}
-		
 		@Nested
 		class _Rest
 		{
