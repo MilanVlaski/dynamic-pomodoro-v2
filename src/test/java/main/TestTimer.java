@@ -87,7 +87,6 @@ public class TestTimer
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
 
-
 		}
 
 	}
