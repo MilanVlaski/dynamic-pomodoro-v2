@@ -97,7 +97,7 @@ public class TestTimer
 	{
 		private final Work work;
 
-		public WorkFromTime(Work work)
+		WorkFromTime(Work work)
 		{ this.work = work; }
 
 		Work of(long seconds) throws SessionTooLong
