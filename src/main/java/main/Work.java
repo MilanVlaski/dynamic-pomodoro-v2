@@ -15,10 +15,11 @@ public class Work
 	{ return seconds; }
 
 	public long incrementSeconds() throws SessionTooLong
-	{ 
-		if(seconds >= 60 * 60 * 4)
-			throw new SessionTooLong(); 
-		return ++seconds; }
+	{
+		if (seconds >= 60 * 60 * 4)
+			throw new SessionTooLong();
+		return ++seconds;
+	}
 
 	public Rest rest(LocalTime now)
 	{
