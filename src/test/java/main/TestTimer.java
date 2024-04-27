@@ -58,7 +58,6 @@ public class TestTimer
 			void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
 			{
 				int fourHours = 60 * 60 * 4;
-
 				Counter fourHourCounter = new CountsTimes(new SingleCounter(), fourHours);
 
 				assertThatThrownBy(() -> work.count(fourHourCounter))
