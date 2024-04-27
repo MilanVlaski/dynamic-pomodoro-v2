@@ -59,8 +59,7 @@ public class TestTimer
 				@Test
 				void After_Four_Hours() throws SessionTooLong
 				{
-					Counter fourHourCounter = new Counts(fourHours,
-					                                          new SingleCounter());
+					Counter fourHourCounter = new Counts(fourHours, new SingleCounter());
 					assertThatExceptionOfType(SessionTooLong.class)
 					        .isThrownBy(() -> work.count(fourHourCounter));
 				}
@@ -69,8 +68,7 @@ public class TestTimer
 				void Stops_Seconds_From_Increasing_Past_Four_Hours()
 				{
 					int fiveHours = 60 * 60 * 5;
-					Counts fiveHourCounter = new Counts(fiveHours,
-					                                              new SingleCounter());
+					Counts fiveHourCounter = new Counts(fiveHours, new SingleCounter());
 					try
 					{
 						work.count(fiveHourCounter);
@@ -79,7 +77,7 @@ public class TestTimer
 						e.printStackTrace();
 					}
 					assertThat(work.seconds()).isEqualTo(fourHours);
-					assertThat(fiveHourCounter.wasStopped()).isTrue();
+					assertThat(fiveHourCounter.isWorking()).isFalse();
 				}
 			}
 		}
@@ -133,7 +131,7 @@ public class TestTimer
 				Rest rest = new Rest(5);
 				Counts counter = new Counts(2, new SingleCounter());
 				rest.count(counter);
-				assertThat(counter.wasStopped()).isTrue();
+				assertThat(counter.isWorking()).isFalse();
 			}
 		}
 	}
@@ -143,7 +141,6 @@ public class TestTimer
 
 		private final int times;
 		private Counter counter;
-		private boolean wasStopped;
 
 		Counts(int times, Counter counter)
 		{
@@ -159,18 +156,19 @@ public class TestTimer
 		}
 
 		@Override
-		public void stop()
-		{ this.wasStopped = true; }
-
-		public boolean wasStopped()
-		{ return wasStopped; }
-
-		@Override
 		public void count(Rest rest)
 		{
 			for (int i = 0; i < times; i++)
 				counter.count(rest);
 		}
+
+		@Override
+		public void stop()
+		{ counter.stop(); }
+
+		@Override
+		public boolean isWorking()
+		{ return counter.isWorking(); }
 
 	}
 

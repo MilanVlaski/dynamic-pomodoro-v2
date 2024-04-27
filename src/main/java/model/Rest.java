@@ -3,7 +3,6 @@ package model;
 public class Rest
 {
 	private long seconds;
-	private Counter counter;
 
 	public Rest(long workDuration)
 	{ this.seconds = workDuration / 5; }
@@ -15,17 +14,11 @@ public class Rest
 	{
 		if (seconds > 0)
 			seconds--;
-		
-		if (seconds == 0 && counter != null)
-			counter.stop();
-
+			
 		return seconds;
 	}
 
 	public void count(Counter counter)
-	{
-		this.counter = counter;
-		counter.count(this);
-	}
+	{ counter.count(this); }
 
 }

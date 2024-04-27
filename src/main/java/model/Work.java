@@ -3,7 +3,6 @@ package model;
 public class Work
 {
 	private long seconds;
-	private Counter counter;
 
 	public long seconds()
 	{ return seconds; }
@@ -12,19 +11,13 @@ public class Work
 	{
 		seconds++;
 		if (seconds == 60 * 60 * 4)
-		{
-			counter.stop();
 			throw new SessionTooLong();
-		}
 		else
 			return seconds;
 	}
 
 	public void count(Counter counter) throws SessionTooLong
-	{
-		this.counter = counter;
-		counter.count(this);
-	}
+	{ counter.count(this); }
 
 	public Rest rest()
 	{ return new Rest(seconds); }
