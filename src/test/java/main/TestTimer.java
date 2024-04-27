@@ -5,7 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.*;
 
-import main.Work.SessionTooLong;
+import model.*;
+import model.Work.SessionTooLong;
 
 public class TestTimer
 {

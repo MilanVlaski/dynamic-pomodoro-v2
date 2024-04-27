@@ -1,6 +1,6 @@
-package main;
+package model;
 
-import main.Work.SessionTooLong;
+import model.Work.SessionTooLong;
 
 public interface Counter
 {

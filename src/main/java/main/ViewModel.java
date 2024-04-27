@@ -1,5 +1,8 @@
 package main;
 
+import model.Counter;
+import model.Timer;
+
 public class ViewModel
 {
 
