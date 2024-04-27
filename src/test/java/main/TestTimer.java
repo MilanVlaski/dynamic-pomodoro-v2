@@ -73,7 +73,7 @@ public class TestTimer
 				{
 					int fiveHours = 60 * 60 * 5;
 					CountsTimes fiveHourCounter = new CountsTimes(fiveHours,
-					                                          new SingleCounter());
+					                                              new SingleCounter());
 					try
 					{
 						work.count(fiveHourCounter);
@@ -84,22 +84,19 @@ public class TestTimer
 					assertThat(work.seconds()).isEqualTo(fourHours);
 					assertThat(fiveHourCounter.wasStopped()).isTrue();
 				}
-
 			}
-
-
 		}
-
-
 		@Nested
 		class _Rest
 		{
 			@Test
 			void Lasts_Five_Seconds_After_Works_For_Twenty_Five() throws SessionTooLong
 			{
+				Counter twentyFiveCounter = new CountsTimes(25, new SingleCounter());
+
 				Work work = timer.start();
-				Work workForTwentyFive = new WorkFromTime(work).of(25);
-				Rest rest = workForTwentyFive.rest();
+				work.count(twentyFiveCounter);
+				Rest rest = work.rest();
 				assertThat(rest.seconds()).isEqualTo(5);
 			}
 
@@ -157,20 +154,4 @@ public class TestTimer
 
 	}
 
-
-	class WorkFromTime
-	{
-		private final Work work;
-
-		WorkFromTime(Work work)
-		{ this.work = work; }
-
-		Work of(long seconds) throws SessionTooLong
-		{
-			for (int i = 0; i < seconds; i++)
-				work.incrementSeconds();
-			return work;
-		}
-
-	}
 }
