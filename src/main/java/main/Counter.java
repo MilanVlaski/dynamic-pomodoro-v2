@@ -1,6 +1,8 @@
 package main;
 
-public class Counter
-{
+import main.Work.SessionTooLong;
 
+public interface Counter
+{
+	void count(Work work) throws SessionTooLong;
 }

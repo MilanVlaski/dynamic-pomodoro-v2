@@ -9,9 +9,11 @@ public class Work
 
 	public long incrementSeconds() throws SessionTooLong
 	{
-		if (seconds >= 60 * 60 * 4)
+		seconds++;
+		if (seconds == 60 * 60 * 4)
 			throw new SessionTooLong();
-		return ++seconds;
+		else
+			return seconds;
 	}
 
 	public Rest rest()
@@ -24,4 +26,7 @@ public class Work
 		SessionTooLong()
 		{ super("Session can't last more than four hours!"); }
 	}
+
+	public void count(Counter counter) throws SessionTooLong
+	{ counter.count(this); }
 }

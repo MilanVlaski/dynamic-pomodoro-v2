@@ -38,13 +38,32 @@ public class TestTimer
 			{ assertThat(work.incrementSeconds()).isEqualTo(1); }
 
 			@Test
+			void Counts_Up_Once() throws SessionTooLong
+			{
+				Counter singleCounter = new SingleCounter();
+				work.count(singleCounter);
+
+				assertThat(work.seconds()).isEqualTo(1);
+			}
+
+			@Test
+			void Counts_Up_Twice() throws SessionTooLong
+			{
+				Counter once = new SingleCounter();
+				Counter twice = new CountsTimes(once, 2);
+				work.count(twice);
+
+				assertThat(work.seconds()).isEqualTo(2);
+			}
+
+			@Test
 			void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
 			{
-				long fourHours = 60 * 60 * 4;
+				int fourHours = 60 * 60 * 4;
 
-				var fourHourWork = new WorkFromTime(work).of(fourHours);
-
-				assertThatThrownBy(() -> fourHourWork.incrementSeconds())
+				Counter fourHour = new CountsTimes(new SingleCounter(), fourHours);
+				
+				assertThatThrownBy(() -> work.count(fourHour))
 				        .isInstanceOf(SessionTooLong.class);
 			}
 		}
@@ -87,6 +106,26 @@ public class TestTimer
 
 	}
 
+	class CountsTimes implements Counter
+	{
+
+		private final int times;
+		private Counter counter;
+
+		CountsTimes(Counter counter, int times)
+		{
+			this.counter = counter;
+			this.times = times;
+		}
+
+		@Override
+		public void count(Work work) throws SessionTooLong
+		{
+			for (int i = 0; i < times; i++)
+				counter.count(work);
+		}
+	}
+	
 	class WorkFromTime
 	{
 		private final Work work;
