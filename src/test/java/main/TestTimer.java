@@ -10,12 +10,6 @@ import model.Work.SessionTooLong;
 
 public class TestTimer
 {
-	Timer timer;
-
-	@BeforeEach
-	void setup()
-	{ timer = new Timer(); }
-
 	@Nested
 	class _Work
 	{
@@ -23,7 +17,7 @@ public class TestTimer
 
 		@BeforeEach
 		void setup()
-		{ work = timer.start(); }
+		{ work = new Timer().start(); }
 
 		@Test
 		void Begins_Work()
@@ -86,7 +80,7 @@ public class TestTimer
 		{
 			Counter twentyFiveCounter = new Counts(25, new SingleCounter());
 
-			Work work = timer.start();
+			Work work = new Timer().start();
 			work.count(twentyFiveCounter);
 			Rest rest = work.rest();
 			assertThat(rest.seconds()).isEqualTo(5);
