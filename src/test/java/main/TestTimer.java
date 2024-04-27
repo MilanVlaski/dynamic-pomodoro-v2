@@ -120,9 +120,16 @@ public class TestTimer
 				Rest rest = new Rest(0);
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
-
+			
+			@Test
+			void Counts_Backwards()
+			{
+				Rest rest = new Rest(5);
+				Counter counter = new SingleCounter();
+				rest.count(counter);
+				assertThat(rest.seconds()).isEqualTo(0);
+			}
 		}
-
 	}
 
 	class CountsTimes implements Counter
@@ -151,6 +158,13 @@ public class TestTimer
 
 		public boolean wasStopped()
 		{ return wasStopped; }
+
+		@Override
+		public void count(Rest rest)
+		{
+			for (int i = 0; i < times; i++)
+				counter.count(rest);
+		}
 
 	}
 

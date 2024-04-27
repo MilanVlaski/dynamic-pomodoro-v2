@@ -13,4 +13,8 @@ public class SingleCounter implements Counter
 	public void stop()
 	{}
 
+	@Override
+	public void count(Rest rest)
+	{ rest.decrementSeconds(); }
+
 }
