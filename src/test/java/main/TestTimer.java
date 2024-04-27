@@ -10,6 +10,7 @@ import model.Work.SessionTooLong;
 
 public class TestTimer
 {
+
 	@Nested
 	class _Work
 	{
