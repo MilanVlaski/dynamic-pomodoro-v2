@@ -34,24 +34,20 @@ public class TestTimer
 			{ assertThat(work.seconds()).isEqualTo(0); }
 
 			@Test
-			void Seconds_Passed_Increase() throws SessionTooLong
+			void Seconds_Increase() throws SessionTooLong
 			{ assertThat(work.incrementSeconds()).isEqualTo(1); }
 
 			@Test
 			void Counts_Up_Once() throws SessionTooLong
 			{
-				Counter singleCounter = new SingleCounter();
-				work.count(singleCounter);
-
+				work.count(new SingleCounter());
 				assertThat(work.seconds()).isEqualTo(1);
 			}
 
 			@Test
 			void Counts_Up_Twice() throws SessionTooLong
 			{
-				Counter twice = new CountsTimes(2, new SingleCounter());
-				work.count(twice);
-
+				work.count(new Counts(2, new SingleCounter()));
 				assertThat(work.seconds()).isEqualTo(2);
 			}
 
@@ -63,7 +59,7 @@ public class TestTimer
 				@Test
 				void After_Four_Hours() throws SessionTooLong
 				{
-					Counter fourHourCounter = new CountsTimes(fourHours,
+					Counter fourHourCounter = new Counts(fourHours,
 					                                          new SingleCounter());
 					assertThatExceptionOfType(SessionTooLong.class)
 					        .isThrownBy(() -> work.count(fourHourCounter));
@@ -73,7 +69,7 @@ public class TestTimer
 				void Stops_Seconds_From_Increasing_Past_Four_Hours()
 				{
 					int fiveHours = 60 * 60 * 5;
-					CountsTimes fiveHourCounter = new CountsTimes(fiveHours,
+					Counts fiveHourCounter = new Counts(fiveHours,
 					                                              new SingleCounter());
 					try
 					{
@@ -87,13 +83,14 @@ public class TestTimer
 				}
 			}
 		}
+
 		@Nested
 		class _Rest
 		{
 			@Test
 			void Lasts_Five_Seconds_After_Works_For_Twenty_Five() throws SessionTooLong
 			{
-				Counter twentyFiveCounter = new CountsTimes(25, new SingleCounter());
+				Counter twentyFiveCounter = new Counts(25, new SingleCounter());
 
 				Work work = timer.start();
 				work.count(twentyFiveCounter);
@@ -121,7 +118,7 @@ public class TestTimer
 				Rest rest = new Rest(0);
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
-			
+
 			@Test
 			void Counts_Backwards()
 			{
@@ -129,26 +126,26 @@ public class TestTimer
 				rest.count(new SingleCounter());
 				assertThat(rest.seconds()).isEqualTo(0);
 			}
-			
+
 			@Test
 			void Stops_Counting_When_Zero()
 			{
 				Rest rest = new Rest(5);
-				CountsTimes counter = new CountsTimes(2, new SingleCounter());
+				Counts counter = new Counts(2, new SingleCounter());
 				rest.count(counter);
 				assertThat(counter.wasStopped()).isTrue();
 			}
 		}
 	}
 
-	class CountsTimes implements Counter
+	class Counts implements Counter
 	{
 
 		private final int times;
 		private Counter counter;
 		private boolean wasStopped;
 
-		CountsTimes(int times, Counter counter)
+		Counts(int times, Counter counter)
 		{
 			this.counter = counter;
 			this.times = times;
