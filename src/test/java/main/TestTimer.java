@@ -9,7 +9,6 @@ import main.Work.SessionTooLong;
 
 public class TestTimer
 {
-
 	@Nested
 	class _Timer
 	{
@@ -49,8 +48,7 @@ public class TestTimer
 			@Test
 			void Counts_Up_Twice() throws SessionTooLong
 			{
-				Counter once = new SingleCounter();
-				Counter twice = new CountsTimes(once, 2);
+				Counter twice = new CountsTimes(new SingleCounter(), 2);
 				work.count(twice);
 
 				assertThat(work.seconds()).isEqualTo(2);
@@ -61,11 +59,12 @@ public class TestTimer
 			{
 				int fourHours = 60 * 60 * 4;
 
-				Counter fourHour = new CountsTimes(new SingleCounter(), fourHours);
-				
-				assertThatThrownBy(() -> work.count(fourHour))
+				Counter fourHourCounter = new CountsTimes(new SingleCounter(), fourHours);
+
+				assertThatThrownBy(() -> work.count(fourHourCounter))
 				        .isInstanceOf(SessionTooLong.class);
 			}
+
 		}
 
 
@@ -125,7 +124,16 @@ public class TestTimer
 				counter.count(work);
 		}
 	}
-	
+
+	public class WasStopped implements Counter
+	{
+
+		@Override
+		public void count(Work work) throws SessionTooLong
+		{}
+
+	}
+
 	class WorkFromTime
 	{
 		private final Work work;

@@ -16,6 +16,9 @@ public class Work
 			return seconds;
 	}
 
+	public void count(Counter counter) throws SessionTooLong
+	{ counter.count(this); }
+
 	public Rest rest()
 	{ return new Rest(seconds); }
 
@@ -27,6 +30,4 @@ public class Work
 		{ super("Session can't last more than four hours!"); }
 	}
 
-	public void count(Counter counter) throws SessionTooLong
-	{ counter.count(this); }
 }
