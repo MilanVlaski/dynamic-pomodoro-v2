@@ -125,9 +125,17 @@ public class TestTimer
 			void Counts_Backwards()
 			{
 				Rest rest = new Rest(5);
-				Counter counter = new SingleCounter();
-				rest.count(counter);
+				rest.count(new SingleCounter());
 				assertThat(rest.seconds()).isEqualTo(0);
+			}
+			
+			@Test
+			void Stops_Counting_When_Zero()
+			{
+				Rest rest = new Rest(5);
+				CountsTimes counter = new CountsTimes(2, new SingleCounter());
+				rest.count(counter);
+				assertThat(counter.wasStopped()).isTrue();
 			}
 		}
 	}
