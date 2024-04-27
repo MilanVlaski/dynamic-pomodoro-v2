@@ -9,4 +9,8 @@ public class SingleCounter implements Counter
 	public void count(Work work) throws SessionTooLong
 	{ work.incrementSeconds(); }
 
+	@Override
+	public void stop()
+	{}
+
 }

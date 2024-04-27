@@ -58,7 +58,7 @@ public class TestTimer
 			class Timeout
 			{
 				int fourHours = 60 * 60 * 4;
-				
+
 				@Test
 				void After_Four_Hours() throws SessionTooLong
 				{
@@ -72,7 +72,7 @@ public class TestTimer
 				void Stops_Seconds_From_Increasing_Past_Four_Hours()
 				{
 					int fiveHours = 60 * 60 * 5;
-					Counter fiveHourCounter = new CountsTimes(fiveHours,
+					CountsTimes fiveHourCounter = new CountsTimes(fiveHours,
 					                                          new SingleCounter());
 					try
 					{
@@ -82,7 +82,9 @@ public class TestTimer
 						e.printStackTrace();
 					}
 					assertThat(work.seconds()).isEqualTo(fourHours);
+					assertThat(fiveHourCounter.wasStopped()).isTrue();
 				}
+
 			}
 
 
@@ -131,6 +133,7 @@ public class TestTimer
 
 		private final int times;
 		private Counter counter;
+		private boolean wasStopped;
 
 		CountsTimes(int times, Counter counter)
 		{
@@ -144,6 +147,13 @@ public class TestTimer
 			for (int i = 0; i < times; i++)
 				counter.count(work);
 		}
+
+		@Override
+		public void stop()
+		{ this.wasStopped = true; }
+
+		public boolean wasStopped()
+		{ return wasStopped; }
 
 	}
 

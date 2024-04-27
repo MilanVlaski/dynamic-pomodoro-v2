@@ -5,4 +5,5 @@ import main.Work.SessionTooLong;
 public interface Counter
 {
 	void count(Work work) throws SessionTooLong;
+	void stop();
 }
