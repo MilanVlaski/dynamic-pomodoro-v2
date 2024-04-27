@@ -1,6 +1,8 @@
 package main;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 public class TestView
@@ -9,6 +11,12 @@ public class TestView
 	@Test
 	void Shows_Zero_On_Initialize()
 	{
+		Timer timer = new Timer();
+		View view = new View();
+		Counter counter = new Counter();
+		ViewModel vm = new ViewModel(view, counter, timer);
+		
+		assertThat(vm.seconds).isEqualTo(0);
 	}
 
 //	@Test
