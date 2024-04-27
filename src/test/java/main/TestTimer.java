@@ -1,7 +1,7 @@
 package main;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.*;
 
@@ -48,21 +48,43 @@ public class TestTimer
 			@Test
 			void Counts_Up_Twice() throws SessionTooLong
 			{
-				Counter twice = new CountsTimes(new SingleCounter(), 2);
+				Counter twice = new CountsTimes(2, new SingleCounter());
 				work.count(twice);
 
 				assertThat(work.seconds()).isEqualTo(2);
 			}
 
-			@Test
-			void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
+			@Nested
+			class Timeout
 			{
 				int fourHours = 60 * 60 * 4;
-				Counter fourHourCounter = new CountsTimes(new SingleCounter(), fourHours);
+				
+				@Test
+				void After_Four_Hours() throws SessionTooLong
+				{
+					Counter fourHourCounter = new CountsTimes(fourHours,
+					                                          new SingleCounter());
+					assertThatExceptionOfType(SessionTooLong.class)
+					        .isThrownBy(() -> work.count(fourHourCounter));
+				}
 
-				assertThatThrownBy(() -> work.count(fourHourCounter))
-				        .isInstanceOf(SessionTooLong.class);
+				@Test
+				void Stops_Seconds_From_Increasing_Past_Four_Hours()
+				{
+					int fiveHours = 60 * 60 * 5;
+					Counter fiveHourCounter = new CountsTimes(fiveHours,
+					                                          new SingleCounter());
+					try
+					{
+						work.count(fiveHourCounter);
+					} catch (SessionTooLong e)
+					{
+						e.printStackTrace();
+					}
+					assertThat(work.seconds()).isEqualTo(fourHours);
+				}
 			}
+
 
 		}
 
@@ -110,7 +132,7 @@ public class TestTimer
 		private final int times;
 		private Counter counter;
 
-		CountsTimes(Counter counter, int times)
+		CountsTimes(int times, Counter counter)
 		{
 			this.counter = counter;
 			this.times = times;
@@ -122,16 +144,9 @@ public class TestTimer
 			for (int i = 0; i < times; i++)
 				counter.count(work);
 		}
-	}
-
-	public class WasStopped implements Counter
-	{
-
-		@Override
-		public void count(Work work) throws SessionTooLong
-		{}
 
 	}
+
 
 	class WorkFromTime
 	{
