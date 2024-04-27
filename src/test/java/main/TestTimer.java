@@ -38,8 +38,7 @@ public class TestTimer
 			{ assertThat(work.incrementSeconds()).isEqualTo(1); }
 
 			@Test
-			void Seconds_Increase_Only_Up_To_Four_Hours()
-			        throws SessionTooLong
+			void Seconds_Increase_Only_Up_To_Four_Hours() throws SessionTooLong
 			{
 				long fourHours = 60 * 60 * 4;
 
@@ -87,7 +86,6 @@ public class TestTimer
 		}
 
 	}
-
 
 	class WorkFromTime
 	{
