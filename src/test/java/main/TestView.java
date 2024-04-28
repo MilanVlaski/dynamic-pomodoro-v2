@@ -53,6 +53,7 @@ public class TestView
 		var view = new View();
 		var counter = new WorkThenRest(new Counts().times(25), new Counts().times(6));
 		var director = new ViewDirector(view, new Timer(), counter);
+		
 		director.startWorking();
 		director.startResting();
 
