@@ -16,9 +16,9 @@ public class TestView
 	{
 		var timer = new Timer();
 		View view = new View();
-		ViewCounter counter = new ViewCounter(new SingleCounter());
-		ViewModel viewModel = new ViewModel(view, timer, counter);
-		counter.setView(viewModel);
+		ViewCounter viewCounter = new ViewCounter(new SingleCounter());
+		ViewModel viewModel = new ViewModel(view, timer, viewCounter);
+		viewCounter.setView(viewModel);
 		viewModel.startWorking();
 
 		assertThat(viewModel.seconds).isEqualTo(1);
