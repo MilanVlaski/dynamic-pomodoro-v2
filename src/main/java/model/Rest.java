@@ -2,15 +2,15 @@ package model;
 
 public class Rest
 {
-	private long seconds;
+	private int seconds;
 
-	public Rest(long workDuration)
+	public Rest(int workDuration)
 	{ this.seconds = workDuration / 5; }
 
-	public long seconds()
+	public int seconds()
 	{ return seconds; }
 
-	public long decrementSeconds()
+	public int decrementSeconds()
 	{
 		if (seconds > 0)
 			seconds--;

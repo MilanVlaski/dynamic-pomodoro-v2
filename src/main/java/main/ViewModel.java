@@ -10,7 +10,7 @@ public class ViewModel implements IViewModel
 	private final Counter counter;
 	private final Timer timer;
 
-	public long seconds;
+	public int seconds;
 	public Work work;
 
 	public ViewModel(View view, Timer timer, Counter counter)
@@ -42,7 +42,7 @@ public class ViewModel implements IViewModel
 	}
 
 	@Override
-	public void setSeconds(long seconds)
+	public void setSeconds(int seconds)
 	{
 		this.seconds = seconds;
 		view.seconds = seconds;

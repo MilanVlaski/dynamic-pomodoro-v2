@@ -10,7 +10,7 @@ public class NullViewModel implements IViewModel
 	{}
 
 	@Override
-	public void setSeconds(long seconds)
+	public void setSeconds(int seconds)
 	{}
 
 	@Override

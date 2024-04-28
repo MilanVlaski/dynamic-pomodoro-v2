@@ -2,12 +2,12 @@ package model;
 
 public class Work
 {
-	private long seconds;
+	private int seconds;
 
-	public long seconds()
+	public int seconds()
 	{ return seconds; }
 
-	public long incrementSeconds() throws SessionTooLong
+	public int incrementSeconds() throws SessionTooLong
 	{
 		seconds++;
 		if (seconds == 60 * 60 * 4)
