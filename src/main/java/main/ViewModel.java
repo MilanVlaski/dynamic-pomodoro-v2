@@ -24,7 +24,7 @@ public class ViewModel implements IViewModel
 	public void startWorking()
 	{
 		Work work = timer.start();
-
+		this.work = work;
 		try
 		{
 			counter.count(work, this);
@@ -38,7 +38,7 @@ public class ViewModel implements IViewModel
 	public void startResting()
 	{
 		var rest = work.rest();
-		counter.count(rest, null);
+		counter.count(rest, this);
 	}
 
 	@Override
