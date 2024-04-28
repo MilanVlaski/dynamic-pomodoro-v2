@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.*;
 
-import main.helpers.NullViewModel;
-import main.helpers.Counts;
+import main.mocks.Counts;
+import main.mocks.NullViewModel;
 import model.*;
 import model.Work.SessionTooLong;
 

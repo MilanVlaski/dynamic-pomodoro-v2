@@ -1,4 +1,4 @@
-package main.helpers;
+package main.mocks;
 
 import main.IViewModel;
 
