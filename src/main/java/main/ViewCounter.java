@@ -28,7 +28,7 @@ public class ViewCounter implements Counter
 	public boolean isWorking()
 	{ return counter.isWorking(); }
 
-	public void setView(ViewModel viewModel)
+	public void init(ViewModel viewModel)
 	{ this.viewModel = viewModel; }
 
 }
