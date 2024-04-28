@@ -24,8 +24,7 @@ public class TestView
 	@Test
 	void Decrements_Seconds_While_Resting() throws SessionTooLong
 	{
-		Counter countsTwentyFive = new Counts().times(25);
-		var workThenRest = new WorkThenRest(countsTwentyFive, new SingleCounter());
+		var workThenRest = new WorkThenRest(new Counts().times(25), new SingleCounter());
 
 		var viewModel = new ViewDirector(new View(), new Timer(), workThenRest);
 
