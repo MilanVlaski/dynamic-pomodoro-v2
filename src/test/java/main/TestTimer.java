@@ -38,7 +38,7 @@ public class TestTimer
 		@Test
 		void Counts_Up_Twice() throws SessionTooLong
 		{
-			work.count(new Counts(2, new SingleCounter()));
+			work.count(new Counts(new SingleCounter()).times(2));
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -50,7 +50,8 @@ public class TestTimer
 			@Test
 			void After_Four_Hours() throws SessionTooLong
 			{
-				Counter fourHourCounter = new Counts(fourHours, new SingleCounter());
+				Counter fourHourCounter = new Counts(new SingleCounter())
+				        .times(fourHours);
 				assertThatExceptionOfType(SessionTooLong.class)
 				        .isThrownBy(() -> work.count(fourHourCounter));
 			}
@@ -59,7 +60,8 @@ public class TestTimer
 			void Stops_Seconds_From_Increasing_Past_Four_Hours()
 			{
 				int fiveHours = 60 * 60 * 5;
-				Counts fiveHourCounter = new Counts(fiveHours, new SingleCounter());
+				Counter fiveHourCounter = new Counts(new SingleCounter())
+				        .times(fiveHours);
 				try
 				{
 					work.count(fiveHourCounter);
@@ -79,7 +81,7 @@ public class TestTimer
 		@Test
 		void Lasts_Five_Seconds_After_Works_For_Twenty_Five() throws SessionTooLong
 		{
-			Counter twentyFiveCounter = new Counts(25, new SingleCounter());
+			Counter twentyFiveCounter = new Counts(new SingleCounter()).times(25);
 
 			Work work = new Timer().start();
 			work.count(twentyFiveCounter);
@@ -120,7 +122,7 @@ public class TestTimer
 		void Stops_Counting_When_Zero()
 		{
 			Rest rest = new Rest(5);
-			Counts counter = new Counts(2, new SingleCounter());
+			Counter counter = new Counts(new SingleCounter()).times(2);
 			rest.count(counter);
 			assertThat(counter.isWorking()).isFalse();
 		}
@@ -129,13 +131,16 @@ public class TestTimer
 	class Counts implements Counter
 	{
 
-		private final int times;
+		private int times;
 		private Counter counter;
 
-		Counts(int times, Counter counter)
+		Counts(Counter counter)
+		{ this.counter = counter; }
+
+		Counter times(int times)
 		{
-			this.counter = counter;
 			this.times = times;
+			return this;
 		}
 
 		@Override
