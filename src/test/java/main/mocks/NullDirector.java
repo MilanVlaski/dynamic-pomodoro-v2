@@ -2,7 +2,7 @@ package main.mocks;
 
 import main.Director;
 
-public class NullViewModel implements Director
+public class NullDirector implements Director
 {
 
 	@Override
