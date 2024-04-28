@@ -1,6 +1,6 @@
 package main.mocks;
 
-import main.IViewModel;
+import main.Director;
 import model.*;
 import model.Work.SessionTooLong;
 
@@ -20,14 +20,14 @@ public class Counts implements Counter
 	}
 
 	@Override
-	public void count(Work work, IViewModel viewModel) throws SessionTooLong
+	public void count(Work work, Director viewModel) throws SessionTooLong
 	{
 		for (int i = 0; i < times; i++)
 			counter.count(work, viewModel);
 	}
 
 	@Override
-	public void count(Rest rest, IViewModel viewModel)
+	public void count(Rest rest, Director viewModel)
 	{
 		for (int i = 0; i < times; i++)
 			counter.count(rest, viewModel);

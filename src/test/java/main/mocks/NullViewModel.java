@@ -1,8 +1,8 @@
 package main.mocks;
 
-import main.IViewModel;
+import main.Director;
 
-public class NullViewModel implements IViewModel
+public class NullViewModel implements Director
 {
 
 	@Override

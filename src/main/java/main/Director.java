@@ -1,7 +1,7 @@
 package main;
 
 
-public interface IViewModel
+public interface Director
 {
 
 	void startWorking();

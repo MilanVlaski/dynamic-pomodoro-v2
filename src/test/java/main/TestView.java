@@ -15,7 +15,7 @@ public class TestView
 	@Test
 	void Increments_Seconds_While_Working() throws SessionTooLong
 	{
-		var viewModel = new ViewModel(new View(), new Timer(), new SingleCounter());
+		var viewModel = new ViewDirector(new View(), new Timer(), new SingleCounter());
 
 		viewModel.startWorking();
 		assertThat(viewModel.seconds).isEqualTo(1);
@@ -27,7 +27,7 @@ public class TestView
 		WorkThenRest workThenRest = new WorkThenRest(new Counts(new SingleCounter())
 		        .times(25), new SingleCounter());
 
-		var viewModel = new ViewModel(new View(), new Timer(), workThenRest);
+		var viewModel = new ViewDirector(new View(), new Timer(), workThenRest);
 
 		viewModel.startWorking();
 		viewModel.startResting();
@@ -48,11 +48,11 @@ public class TestView
 		}
 
 		@Override
-		public void count(Work work, IViewModel viewModel) throws SessionTooLong
+		public void count(Work work, Director viewModel) throws SessionTooLong
 		{ workCounter.count(work, viewModel); }
 
 		@Override
-		public void count(Rest rest, IViewModel viewModel)
+		public void count(Rest rest, Director viewModel)
 		{ restCounter.count(rest, viewModel); }
 
 		@Override

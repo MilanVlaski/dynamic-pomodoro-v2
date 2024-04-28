@@ -1,6 +1,6 @@
 package model;
 
-import main.IViewModel;
+import main.Director;
 import model.Work.SessionTooLong;
 
 public class SingleCounter implements Counter
@@ -9,7 +9,7 @@ public class SingleCounter implements Counter
 	private boolean working;
 
 	@Override
-	public void count(Work work, IViewModel viewModel) throws SessionTooLong
+	public void count(Work work, Director viewModel) throws SessionTooLong
 	{
 		try
 		{
@@ -26,7 +26,7 @@ public class SingleCounter implements Counter
 	{ this.working = false; }
 
 	@Override
-	public void count(Rest rest, IViewModel viewModel)
+	public void count(Rest rest, Director viewModel)
 	{
 		var seconds = rest.decrementSeconds();
 		viewModel.setSeconds(seconds);

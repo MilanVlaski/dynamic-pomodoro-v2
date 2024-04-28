@@ -3,7 +3,7 @@ package main;
 import model.*;
 import model.Work.SessionTooLong;
 
-public class ViewModel implements IViewModel
+public class ViewDirector implements Director
 {
 
 	private final View view;
@@ -13,7 +13,7 @@ public class ViewModel implements IViewModel
 	public int seconds;
 	public Work work;
 
-	public ViewModel(View view, Timer timer, Counter counter)
+	public ViewDirector(View view, Timer timer, Counter counter)
 	{
 		this.view = view;
 		this.timer = timer;
