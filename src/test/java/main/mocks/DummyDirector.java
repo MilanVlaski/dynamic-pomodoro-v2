@@ -2,7 +2,7 @@ package main.mocks;
 
 import main.Director;
 
-public class NullDirector implements Director
+public class DummyDirector implements Director
 {
 
 	@Override

@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.junit.jupiter.api.*;
 
 import main.mocks.Counts;
-import main.mocks.NullDirector;
+import main.mocks.DummyDirector;
 import model.*;
 import model.Work.SessionTooLong;
 
@@ -32,7 +32,7 @@ public class TestTimer
 		@Test
 		void Counts_Up_Once() throws SessionTooLong
 		{
-			new SingleCounter().count(work, new NullDirector());
+			new SingleCounter().count(work, new DummyDirector());
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
@@ -40,7 +40,7 @@ public class TestTimer
 		void Counts_Up_Twice() throws SessionTooLong
 		{
 			Counter twiceCounter = new Counts().times(2);
-			twiceCounter.count(work, new NullDirector());
+			twiceCounter.count(work, new DummyDirector());
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -54,7 +54,7 @@ public class TestTimer
 			{
 				Counter fourHourCounter = new Counts().times(fourHours);
 				assertThatExceptionOfType(SessionTooLong.class).isThrownBy(
-				        () -> fourHourCounter.count(work, new NullDirector()));
+				        () -> fourHourCounter.count(work, new DummyDirector()));
 			}
 
 			@Test
@@ -64,7 +64,7 @@ public class TestTimer
 				Counter fiveHourCounter = new Counts().times(fiveHours);
 				try
 				{
-					fiveHourCounter.count(work, new NullDirector());
+					fiveHourCounter.count(work, new DummyDirector());
 				} catch (SessionTooLong e)
 				{
 					e.printStackTrace();
@@ -84,7 +84,7 @@ public class TestTimer
 			Counter twentyFiveCounter = new Counts().times(25);
 
 			Work work = new Timer().start();
-			twentyFiveCounter.count(work, new NullDirector());
+			twentyFiveCounter.count(work, new DummyDirector());
 			Rest rest = work.rest();
 			assertThat(rest.seconds()).isEqualTo(5);
 		}
@@ -115,7 +115,7 @@ public class TestTimer
 		{
 			Rest rest = new Rest(5);
 			Counter counter = new Counts().times(2);
-			counter.count(rest, new NullDirector());
+			counter.count(rest, new DummyDirector());
 			assertThat(counter.isWorking()).isFalse();
 		}
 	}
