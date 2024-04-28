@@ -35,6 +35,9 @@ public class ViewModel implements IViewModel
 
 	@Override
 	public void setSeconds(long seconds)
-	{ this.seconds = seconds; }
+	{
+		this.seconds = seconds;
+		view.setSeconds(seconds);
+	}
 
 }
