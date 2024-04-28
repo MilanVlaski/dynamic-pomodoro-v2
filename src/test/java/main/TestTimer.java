@@ -47,7 +47,7 @@ public class TestTimer
 		@Nested
 		class Timeout
 		{
-			int fourHours = 60 * 60 * 4;
+			public static int fourHours = 60 * 60 * 4;
 
 			@Test
 			void After_Four_Hours() throws SessionTooLong

@@ -1,5 +1,6 @@
 package main;
 
+import static main.TestTimer._Work.Timeout.fourHours;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -26,12 +27,24 @@ public class TestView
 	{
 		var workThenRest = new WorkThenRest(new Counts().times(25), new SingleCounter());
 
-		var viewModel = new ViewDirector(new View(), new Timer(), workThenRest);
+		var director = new ViewDirector(new View(), new Timer(), workThenRest);
 
+		director.startWorking();
+		director.startResting();
+
+		assertThat(director.seconds).isEqualTo(4);
+	}
+
+	@Test
+	void When_Work_Goes_Over_Four_Hours_Alerts_View_And_Stops_Counting()
+	{
+		var view = new View();
+		var longCounter = new Counts().times(fourHours + 123);
+		var viewModel = new ViewDirector(view, new Timer(), longCounter);
 		viewModel.startWorking();
-		viewModel.startResting();
 
-		assertThat(viewModel.seconds).isEqualTo(4);
+		assertThat(view.alerted).isTrue();
+		assertThat(longCounter.isWorking()).isFalse();
 	}
 
 	public class WorkThenRest implements Counter

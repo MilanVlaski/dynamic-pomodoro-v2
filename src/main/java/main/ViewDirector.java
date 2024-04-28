@@ -30,6 +30,7 @@ public class ViewDirector implements Director
 			counter.count(work, this);
 		} catch (SessionTooLong e)
 		{
+			view.alert(e);
 			e.printStackTrace();
 		}
 	}
