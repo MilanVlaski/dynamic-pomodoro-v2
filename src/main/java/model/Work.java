@@ -1,5 +1,7 @@
 package model;
 
+import main.IViewModel;
+
 public class Work
 {
 	private long seconds;
@@ -16,8 +18,8 @@ public class Work
 			return seconds;
 	}
 
-	public void count(Counter counter) throws SessionTooLong
-	{ counter.count(this); }
+	public void count(Counter counter, IViewModel viewModel) throws SessionTooLong
+	{ counter.count(this, viewModel); }
 
 	public Rest rest()
 	{ return new Rest(seconds); }

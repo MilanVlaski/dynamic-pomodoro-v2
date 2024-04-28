@@ -3,7 +3,7 @@ package main;
 import model.*;
 import model.Work.SessionTooLong;
 
-public class ViewModel
+public class ViewModel implements IViewModel
 {
 
 	private View view;
@@ -26,17 +26,22 @@ public class ViewModel
 		this.timer = timer;
 	}
 
+	@Override
 	public void startWorking()
 	{
 		Work work = timer.start();
 
 		try
 		{
-			work.count(counter);
+			work.count(counter, null);
 		} catch (SessionTooLong e)
 		{
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void setSeconds(long seconds)
+	{}
 
 }

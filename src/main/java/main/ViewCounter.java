@@ -7,14 +7,14 @@ public class ViewCounter implements Counter
 {
 
 	private final Counter counter;
-	private ViewModel viewModel;
+	private IViewModel viewModel;
 
 	public ViewCounter(Counter counter)
 	{ this.counter = counter; }
 
 	@Override
-	public void count(Work work) throws SessionTooLong
-	{ counter.count(work); }
+	public void count(Work work, IViewModel viewModel) throws SessionTooLong
+	{ counter.count(work, null); }
 
 	@Override
 	public void count(Rest rest)
@@ -28,7 +28,7 @@ public class ViewCounter implements Counter
 	public boolean isWorking()
 	{ return counter.isWorking(); }
 
-	public void init(ViewModel viewModel)
+	public void init(IViewModel viewModel)
 	{ this.viewModel = viewModel; }
 
 }

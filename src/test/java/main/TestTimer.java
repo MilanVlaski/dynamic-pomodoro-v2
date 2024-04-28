@@ -11,6 +11,7 @@ import model.Work.SessionTooLong;
 public class TestTimer
 {
 
+
 	@Nested
 	class _Work
 	{
@@ -31,14 +32,14 @@ public class TestTimer
 		@Test
 		void Counts_Up_Once() throws SessionTooLong
 		{
-			work.count(new SingleCounter());
+			work.count(new SingleCounter(), new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
 		@Test
 		void Counts_Up_Twice() throws SessionTooLong
 		{
-			work.count(new Counts(new SingleCounter()).times(2));
+			work.count(new Counts(new SingleCounter()).times(2), new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -53,7 +54,7 @@ public class TestTimer
 				Counter fourHourCounter = new Counts(new SingleCounter())
 				        .times(fourHours);
 				assertThatExceptionOfType(SessionTooLong.class)
-				        .isThrownBy(() -> work.count(fourHourCounter));
+				        .isThrownBy(() -> work.count(fourHourCounter, new NullViewModel()));
 			}
 
 			@Test
@@ -64,7 +65,7 @@ public class TestTimer
 				        .times(fiveHours);
 				try
 				{
-					work.count(fiveHourCounter);
+					work.count(fiveHourCounter, new NullViewModel());
 				} catch (SessionTooLong e)
 				{
 					e.printStackTrace();
@@ -84,7 +85,7 @@ public class TestTimer
 			Counter twentyFiveCounter = new Counts(new SingleCounter()).times(25);
 
 			Work work = new Timer().start();
-			work.count(twentyFiveCounter);
+			work.count(twentyFiveCounter, new NullViewModel());
 			Rest rest = work.rest();
 			assertThat(rest.seconds()).isEqualTo(5);
 		}
@@ -144,10 +145,10 @@ public class TestTimer
 		}
 
 		@Override
-		public void count(Work work) throws SessionTooLong
+		public void count(Work work, IViewModel viewModel) throws SessionTooLong
 		{
 			for (int i = 0; i < times; i++)
-				counter.count(work);
+				counter.count(work, new NullViewModel());
 		}
 
 		@Override
@@ -164,6 +165,19 @@ public class TestTimer
 		@Override
 		public boolean isWorking()
 		{ return counter.isWorking(); }
+
+	}
+
+	public class NullViewModel implements IViewModel
+	{
+
+		@Override
+		public void startWorking()
+		{}
+
+		@Override
+		public void setSeconds(long seconds)
+		{}
 
 	}
 

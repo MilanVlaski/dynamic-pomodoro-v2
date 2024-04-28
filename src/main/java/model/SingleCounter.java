@@ -1,5 +1,6 @@
 package model;
 
+import main.IViewModel;
 import model.Work.SessionTooLong;
 
 public class SingleCounter implements Counter
@@ -8,11 +9,11 @@ public class SingleCounter implements Counter
 	private boolean working;
 
 	@Override
-	public void count(Work work) throws SessionTooLong
+	public void count(Work work, IViewModel viewModel) throws SessionTooLong
 	{
 		try
 		{
-			work.incrementSeconds();
+			viewModel.setSeconds(work.incrementSeconds());
 		} catch (SessionTooLong e)
 		{
 			stop();
