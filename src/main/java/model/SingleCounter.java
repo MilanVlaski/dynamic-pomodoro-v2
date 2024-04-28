@@ -30,7 +30,8 @@ public class SingleCounter implements Counter
 	{
 		var seconds = rest.decrementSeconds();
 		viewModel.setSeconds(seconds);
-		if (seconds == 0) {
+		if (seconds == 0)
+		{
 			viewModel.finishRest();
 			stop();
 		}

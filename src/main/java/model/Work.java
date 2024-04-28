@@ -19,6 +19,7 @@ public class Work
 	public Rest rest()
 	{ return new Rest(seconds); }
 
+
 	public class SessionTooLong extends Exception
 	{
 		private static final long serialVersionUID = -5023485537050739302L;
