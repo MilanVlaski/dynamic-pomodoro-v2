@@ -32,14 +32,14 @@ public class TestTimer
 		@Test
 		void Counts_Up_Once() throws SessionTooLong
 		{
-			work.count(new SingleCounter(), new NullViewModel());
+			new SingleCounter().count(work, new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
 		@Test
 		void Counts_Up_Twice() throws SessionTooLong
 		{
-			work.count(new Counts(new SingleCounter()).times(2), new NullViewModel());
+			new Counts(new SingleCounter()).times(2).count(work, new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -53,8 +53,8 @@ public class TestTimer
 			{
 				Counter fourHourCounter = new Counts(new SingleCounter())
 				        .times(fourHours);
-				assertThatExceptionOfType(SessionTooLong.class)
-				        .isThrownBy(() -> work.count(fourHourCounter, new NullViewModel()));
+				assertThatExceptionOfType(SessionTooLong.class).isThrownBy(
+				        () -> fourHourCounter.count(work, new NullViewModel()));
 			}
 
 			@Test
@@ -65,7 +65,7 @@ public class TestTimer
 				        .times(fiveHours);
 				try
 				{
-					work.count(fiveHourCounter, new NullViewModel());
+					fiveHourCounter.count(work, new NullViewModel());
 				} catch (SessionTooLong e)
 				{
 					e.printStackTrace();
@@ -85,7 +85,7 @@ public class TestTimer
 			Counter twentyFiveCounter = new Counts(new SingleCounter()).times(25);
 
 			Work work = new Timer().start();
-			work.count(twentyFiveCounter, new NullViewModel());
+			twentyFiveCounter.count(work, new NullViewModel());
 			Rest rest = work.rest();
 			assertThat(rest.seconds()).isEqualTo(5);
 		}

@@ -26,7 +26,7 @@ public class ViewModel implements IViewModel
 
 		try
 		{
-			work.count(counter, this);
+			counter.count(work, this);
 		} catch (SessionTooLong e)
 		{
 			e.printStackTrace();
