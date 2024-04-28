@@ -19,13 +19,6 @@ public class ViewModel implements IViewModel
 		this.counter = counter;
 	}
 
-	public ViewModel(View view, Timer timer)
-	{
-
-		this.view = view;
-		this.timer = timer;
-	}
-
 	@Override
 	public void startWorking()
 	{
@@ -33,7 +26,7 @@ public class ViewModel implements IViewModel
 
 		try
 		{
-			work.count(counter, null);
+			work.count(counter, this);
 		} catch (SessionTooLong e)
 		{
 			e.printStackTrace();
@@ -42,6 +35,6 @@ public class ViewModel implements IViewModel
 
 	@Override
 	public void setSeconds(long seconds)
-	{}
+	{ this.seconds = seconds; }
 
 }
