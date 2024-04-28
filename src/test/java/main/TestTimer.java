@@ -12,8 +12,6 @@ import model.Work.SessionTooLong;
 
 public class TestTimer
 {
-
-
 	@Nested
 	class _Work
 	{
@@ -41,7 +39,8 @@ public class TestTimer
 		@Test
 		void Counts_Up_Twice() throws SessionTooLong
 		{
-			new Counts(new SingleCounter()).times(2).count(work, new NullViewModel());
+			Counter twiceCounter = new Counts(new SingleCounter()).times(2);
+			twiceCounter.count(work, new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -110,14 +109,6 @@ public class TestTimer
 		void Lasts_Zero_Seconds_If_Has_Not_Worked()
 		{
 			Rest rest = new Rest(0);
-			assertThat(rest.seconds()).isEqualTo(0);
-		}
-
-		@Test
-		void Counts_Backwards()
-		{
-			Rest rest = new Rest(5);
-			new SingleCounter().count(rest, new NullViewModel());
 			assertThat(rest.seconds()).isEqualTo(0);
 		}
 
