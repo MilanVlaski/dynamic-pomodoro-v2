@@ -18,7 +18,4 @@ public class Rest
 		return seconds;
 	}
 
-	public void count(Counter counter)
-	{ counter.count(this); }
-
 }
