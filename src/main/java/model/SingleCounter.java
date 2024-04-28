@@ -16,7 +16,6 @@ public class SingleCounter implements Counter
 		} catch (SessionTooLong e)
 		{
 			stop();
-			e.printStackTrace();
 			throw e;
 		}
 	}
