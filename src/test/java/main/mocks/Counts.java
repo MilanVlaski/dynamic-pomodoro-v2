@@ -10,8 +10,8 @@ public class Counts implements Counter
 	private int times;
 	private Counter counter;
 
-	public Counts(Counter counter)
-	{ this.counter = counter; }
+	public Counts()
+	{ this.counter = new SingleCounter(); }
 
 	public Counter times(int times)
 	{

@@ -39,7 +39,7 @@ public class TestTimer
 		@Test
 		void Counts_Up_Twice() throws SessionTooLong
 		{
-			Counter twiceCounter = new Counts(new SingleCounter()).times(2);
+			Counter twiceCounter = new Counts().times(2);
 			twiceCounter.count(work, new NullViewModel());
 			assertThat(work.seconds()).isEqualTo(2);
 		}
@@ -52,8 +52,7 @@ public class TestTimer
 			@Test
 			void After_Four_Hours() throws SessionTooLong
 			{
-				Counter fourHourCounter = new Counts(new SingleCounter())
-				        .times(fourHours);
+				Counter fourHourCounter = new Counts().times(fourHours);
 				assertThatExceptionOfType(SessionTooLong.class).isThrownBy(
 				        () -> fourHourCounter.count(work, new NullViewModel()));
 			}
@@ -62,8 +61,7 @@ public class TestTimer
 			void Stops_Seconds_From_Increasing_Past_Four_Hours()
 			{
 				int fiveHours = 60 * 60 * 5;
-				Counter fiveHourCounter = new Counts(new SingleCounter())
-				        .times(fiveHours);
+				Counter fiveHourCounter = new Counts().times(fiveHours);
 				try
 				{
 					fiveHourCounter.count(work, new NullViewModel());
@@ -83,7 +81,7 @@ public class TestTimer
 		@Test
 		void Lasts_Five_Seconds_After_Works_For_Twenty_Five() throws SessionTooLong
 		{
-			Counter twentyFiveCounter = new Counts(new SingleCounter()).times(25);
+			Counter twentyFiveCounter = new Counts().times(25);
 
 			Work work = new Timer().start();
 			twentyFiveCounter.count(work, new NullViewModel());
@@ -116,7 +114,7 @@ public class TestTimer
 		void Stops_Counting_When_Zero()
 		{
 			Rest rest = new Rest(5);
-			Counter counter = new Counts(new SingleCounter()).times(2);
+			Counter counter = new Counts().times(2);
 			counter.count(rest, new NullViewModel());
 			assertThat(counter.isWorking()).isFalse();
 		}
