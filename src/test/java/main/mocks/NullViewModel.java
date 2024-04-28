@@ -13,4 +13,8 @@ public class NullViewModel implements IViewModel
 	public void setSeconds(long seconds)
 	{}
 
+	@Override
+	public void startResting()
+	{}
+
 }

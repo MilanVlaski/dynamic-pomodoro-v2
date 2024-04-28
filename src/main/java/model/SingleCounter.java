@@ -26,9 +26,10 @@ public class SingleCounter implements Counter
 	{ this.working = false; }
 
 	@Override
-	public void count(Rest rest)
+	public void count(Rest rest, IViewModel viewModel)
 	{
 		var seconds = rest.decrementSeconds();
+		viewModel.setSeconds(seconds);
 		if (seconds == 0)
 			stop();
 	}

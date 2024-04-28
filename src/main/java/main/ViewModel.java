@@ -11,6 +11,7 @@ public class ViewModel implements IViewModel
 	private Timer timer;
 
 	public long seconds;
+	public Work work;
 
 	public ViewModel(View view, Timer timer, Counter counter)
 	{
@@ -34,10 +35,18 @@ public class ViewModel implements IViewModel
 	}
 
 	@Override
+	public void startResting()
+	{
+		var rest = work.rest();
+		counter.count(rest, null);
+	}
+
+	@Override
 	public void setSeconds(long seconds)
 	{
 		this.seconds = seconds;
 		view.seconds = seconds;
 	}
+
 
 }

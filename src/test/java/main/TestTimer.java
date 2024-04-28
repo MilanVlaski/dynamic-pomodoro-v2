@@ -117,7 +117,7 @@ public class TestTimer
 		void Counts_Backwards()
 		{
 			Rest rest = new Rest(5);
-			new SingleCounter().count(rest);
+			new SingleCounter().count(rest, new NullViewModel());
 			assertThat(rest.seconds()).isEqualTo(0);
 		}
 
@@ -126,7 +126,7 @@ public class TestTimer
 		{
 			Rest rest = new Rest(5);
 			Counter counter = new Counts(new SingleCounter()).times(2);
-			counter.count(rest);
+			counter.count(rest, new NullViewModel());
 			assertThat(counter.isWorking()).isFalse();
 		}
 	}

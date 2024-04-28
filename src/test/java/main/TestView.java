@@ -32,7 +32,7 @@ public class TestView
 		{}
 
 		@Override
-		public void count(Rest rest)
+		public void count(Rest rest, IViewModel newParam)
 		{}
 
 		@Override

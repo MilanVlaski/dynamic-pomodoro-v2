@@ -27,10 +27,10 @@ public class Counts implements Counter
 	}
 
 	@Override
-	public void count(Rest rest)
+	public void count(Rest rest, IViewModel viewModel)
 	{
 		for (int i = 0; i < times; i++)
-			counter.count(rest);
+			counter.count(rest, viewModel);
 	}
 
 	@Override
