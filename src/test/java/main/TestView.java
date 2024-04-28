@@ -17,8 +17,8 @@ public class TestView
 		ViewCounter viewCounter = new ViewCounter(new SingleCounter());
 		ViewModel viewModel = new ViewModel(new View(), new Timer(), viewCounter);
 		viewCounter.init(viewModel);
+		
 		viewModel.startWorking();
-
 		assertThat(viewModel.seconds).isEqualTo(1);
 	}
 //
