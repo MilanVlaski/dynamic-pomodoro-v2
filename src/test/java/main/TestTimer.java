@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.*;
 
+import main.helpers.NullViewModel;
+import main.helpers.Counts;
 import model.*;
 import model.Work.SessionTooLong;
 
@@ -129,56 +131,5 @@ public class TestTimer
 		}
 	}
 
-	class Counts implements Counter
-	{
-
-		private int times;
-		private Counter counter;
-
-		Counts(Counter counter)
-		{ this.counter = counter; }
-
-		Counter times(int times)
-		{
-			this.times = times;
-			return this;
-		}
-
-		@Override
-		public void count(Work work, IViewModel viewModel) throws SessionTooLong
-		{
-			for (int i = 0; i < times; i++)
-				counter.count(work, new NullViewModel());
-		}
-
-		@Override
-		public void count(Rest rest)
-		{
-			for (int i = 0; i < times; i++)
-				counter.count(rest);
-		}
-
-		@Override
-		public void stop()
-		{ counter.stop(); }
-
-		@Override
-		public boolean isWorking()
-		{ return counter.isWorking(); }
-
-	}
-
-	public class NullViewModel implements IViewModel
-	{
-
-		@Override
-		public void startWorking()
-		{}
-
-		@Override
-		public void setSeconds(long seconds)
-		{}
-
-	}
 
 }

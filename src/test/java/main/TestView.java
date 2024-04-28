@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import model.SingleCounter;
-import model.Timer;
+import model.*;
 import model.Work.SessionTooLong;
 
 public class TestView
 {
+
 
 	@Test
 	void Increments_Seconds_While_Working() throws SessionTooLong
@@ -22,8 +22,26 @@ public class TestView
 
 	@Test
 	void Rests_Then_Works() throws SessionTooLong
-	{
-		
-	}
+	{ var viewModel = new ViewModel(new View(), new Timer(), new MultiCounter()); }
 
+	public class MultiCounter implements Counter
+	{
+
+		@Override
+		public void count(Work work, IViewModel viewModel) throws SessionTooLong
+		{}
+
+		@Override
+		public void count(Rest rest)
+		{}
+
+		@Override
+		public void stop()
+		{}
+
+		@Override
+		public boolean isWorking()
+		{ return false; }
+
+	}
 }
