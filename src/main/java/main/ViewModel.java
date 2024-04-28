@@ -6,9 +6,9 @@ import model.Work.SessionTooLong;
 public class ViewModel implements IViewModel
 {
 
-	private View view;
-	private Counter counter;
-	private Timer timer;
+	private final View view;
+	private final Counter counter;
+	private final Timer timer;
 
 	public long seconds;
 	public Work work;
