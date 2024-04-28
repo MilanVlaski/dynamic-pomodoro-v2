@@ -40,11 +40,24 @@ public class TestView
 	{
 		var view = new View();
 		var longCounter = new Counts().times(fourHours + 123);
-		var viewModel = new ViewDirector(view, new Timer(), longCounter);
-		viewModel.startWorking();
+		var director = new ViewDirector(view, new Timer(), longCounter);
+		director.startWorking();
 
 		assertThat(view.alerted).isTrue();
 		assertThat(longCounter.isWorking()).isFalse();
+	}
+
+	@Test
+	void When_Rest_Time_Runs_Out_Alerts_View_And_Stops_Counting()
+	{
+		var view = new View();
+		var counter = new WorkThenRest(new Counts().times(25), new Counts().times(6));
+		var director = new ViewDirector(view, new Timer(), counter);
+		director.startWorking();
+		director.startResting();
+
+		assertThat(director.restFinished).isTrue();
+		assertThat(counter.isWorking()).isFalse();
 	}
 
 	public class WorkThenRest implements Counter

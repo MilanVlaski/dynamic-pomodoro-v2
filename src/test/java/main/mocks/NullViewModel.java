@@ -17,4 +17,8 @@ public class NullViewModel implements Director
 	public void startResting()
 	{}
 
+	@Override
+	public void finishRest()
+	{}
+
 }

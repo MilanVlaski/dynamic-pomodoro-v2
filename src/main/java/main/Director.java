@@ -7,5 +7,6 @@ public interface Director
 	void startWorking();
 	void startResting();
 	void setSeconds(int seconds);
+	void finishRest();
 
 }

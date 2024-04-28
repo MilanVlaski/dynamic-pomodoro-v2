@@ -11,7 +11,8 @@ public class ViewDirector implements Director
 	private final Timer timer;
 
 	public int seconds;
-	public Work work;
+	private Work work;
+	public boolean restFinished;
 
 	public ViewDirector(View view, Timer timer, Counter counter)
 	{
@@ -47,6 +48,13 @@ public class ViewDirector implements Director
 	{
 		this.seconds = seconds;
 		view.seconds = seconds;
+	}
+
+	@Override
+	public void finishRest()
+	{
+		this.restFinished = true;
+		view.finishRest();
 	}
 
 

@@ -9,5 +9,9 @@ public class View
 	public boolean alerted;
 
 	public void alert(SessionTooLong e)
-	{alerted = true;}
+	{ alerted = true; }
+
+	public void finishRest()
+	{}
+
 }
