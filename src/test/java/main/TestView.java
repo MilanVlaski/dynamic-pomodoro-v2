@@ -14,10 +14,8 @@ public class TestView
 	@Test
 	void Increments_Seconds_While_Working() throws SessionTooLong
 	{
-		var timer = new Timer();
-		View view = new View();
 		ViewCounter viewCounter = new ViewCounter(new SingleCounter());
-		ViewModel viewModel = new ViewModel(view, timer, viewCounter);
+		ViewModel viewModel = new ViewModel(new View(), new Timer(), viewCounter);
 		viewCounter.setView(viewModel);
 		viewModel.startWorking();
 
