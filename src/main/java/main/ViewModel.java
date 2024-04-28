@@ -37,7 +37,7 @@ public class ViewModel implements IViewModel
 	public void setSeconds(long seconds)
 	{
 		this.seconds = seconds;
-		view.setSeconds(seconds);
+		view.seconds = seconds;
 	}
 
 }
