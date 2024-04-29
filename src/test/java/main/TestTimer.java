@@ -62,6 +62,9 @@ public class TestTimer
 			{
 				int fiveHours = 60 * 60 * 5;
 				Counter fiveHourCounter = new Counts().times(fiveHours);
+				
+				assertThat(fiveHourCounter.isWorking()).isFalse();
+				
 				try
 				{
 					fiveHourCounter.count(work, new DummyDirector());
