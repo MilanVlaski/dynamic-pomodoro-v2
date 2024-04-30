@@ -23,12 +23,25 @@ public class TestView
 	}
 
 	@Test
-	void Work_starts_and_Increases_time_by_one_econd()
+	void Work_starts_and_Increases_time_by_one_second()
 	{
 		var view = new View(new Timer(), new SingleCounter());
 		view.startWorking();
 		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 1));
 	}
+
+	@Test
+	void Works_then_rests()
+	{
+		var view = new View(new Timer(),
+		                    new MultiCounter(new Counts().times(25), new NullCounter()));
+
+		view.startWorking();
+		view.startResting();
+
+		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 5));
+	}
+
 
 	@Test
 	void Works_then_rests_Then_time_decreases()
@@ -40,6 +53,24 @@ public class TestView
 		view.startResting();
 
 		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 4));
+	}
+
+	@Test
+	void Works_then_rests_then_rest_runs_out()
+	{
+		var view = new View(new Timer(), new MultiCounter(new Counts().times(25),
+		                                                  new Counts().times(5)));
+		
+		view.startWorking();
+		view.startResting();
+		
+		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0));
+	}
+
+	@Test
+	void When_Works_then_rests_then_works_Then_time_is_reset()
+	{
+
 	}
 
 	public class MultiCounter implements Counter
@@ -68,81 +99,5 @@ public class TestView
 		{ return counters.get(i).isWorking(); }
 
 	}
-//
-//	@Test
-//	void Increments_Seconds_While_Working() throws SessionTooLong
-//	{
-//		var viewModel = new ViewDirector(new View(), new Timer(), new SingleCounter());
-//
-//		viewModel.startWorking();
-//		assertThat(viewModel.seconds).isEqualTo(1);
-//	}
-//
-//	@Test
-//	void Decrements_Seconds_While_Resting() throws SessionTooLong
-//	{
-//		var workThenRest = new WorkThenRest(new Counts().times(25), new SingleCounter());
-//
-//		var director = new ViewDirector(new View(), new Timer(), workThenRest);
-//
-//		director.startWorking();
-//		director.startResting();
-//
-//		assertThat(director.seconds).isEqualTo(4);
-//	}
-//
-//	@Test
-//	void When_Work_Goes_Over_Four_Hours_Alerts_View_And_Stops_Counting()
-//	{
-//		var view = new View();
-//		var longCounter = new Counts().times(fourHours + 123);
-//		var director = new ViewDirector(view, new Timer(), longCounter);
-//		director.startWorking();
-//
-//		assertThat(view.alerted).isTrue();
-//		assertThat(longCounter.isWorking()).isFalse();
-//	}
-//
-//	@Test
-//	void When_Rest_Time_Runs_Out_Alerts_View_And_Stops_Counting()
-//	{
-//		var view = new View();
-//		var counter = new WorkThenRest(new Counts().times(25), new Counts().times(6));
-//		var director = new ViewDirector(view, new Timer(), counter);
-//		
-//		director.startWorking();
-//		director.startResting();
-//
-//		assertThat(director.restFinished).isTrue();
-//		assertThat(counter.isWorking()).isFalse();
-//	}
-//
-//	public class WorkThenRest implements Counter
-//	{
-//
-//		private final Counter workCounter;
-//		private final Counter restCounter;
-//
-//		public WorkThenRest(Counter work, Counter rest)
-//		{
-//			this.workCounter = work;
-//			this.restCounter = rest;
-//		}
-//
-//		@Override
-//		public void count(Work work) throws SessionTooLong
-//		{ workCounter.count(work); }
-//
-//		@Override
-//		public void count(Rest rest, Director viewModel)
-//		{ restCounter.count(rest, viewModel); }
-//
-//		@Override
-//		public void stop()
-//		{}
-//
-//		@Override
-//		public boolean isWorking()
-//		{ return false; }
-//
+
 }

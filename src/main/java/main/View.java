@@ -21,12 +21,8 @@ public class View
 	public LocalTime time()
 	{ return time; }
 
-	public void incrementByOneSecond()
-	{ time = time.plusSeconds(1); }
-
 	public void startWorking()
 	{
-		// time should be set to zero here!
 		this.work = timer.start();
 		work.registerCounter(counter);
 		work.registerView(this);
@@ -36,16 +32,16 @@ public class View
 	public void startResting()
 	{
 		var rest = work.rest();
-		time = rest.time(); 
+		time = rest.time();
 		rest.registerView(this);
 		counter.count(rest);
 	}
 
+	public void setTime(LocalTime time)
+	{ this.time = time; }
+
 	public void finishRest()
 	{}
-
-	public void decrementByOneSecond()
-	{time = time.minusSeconds(1);}
 
 
 }

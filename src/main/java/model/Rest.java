@@ -20,7 +20,7 @@ public class Rest
 	{
 		if (seconds > 0) {
 			seconds--;
-			view.decrementByOneSecond();
+			view.setTime(time());
 		}
 		else
 			counter.stop();

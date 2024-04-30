@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalTime;
+
 import main.View;
 
 public class Work
@@ -14,7 +16,7 @@ public class Work
 	public void incrementSeconds()
 	{
 		seconds++;
-		view.incrementByOneSecond();
+		view.setTime(time());
 		if (seconds >= 60 * 60 * 4)
 			counter.stop();
 	}
@@ -27,5 +29,8 @@ public class Work
 
 	public void registerView(View view)
 	{ this.view = view; }
+
+	public LocalTime time()
+	{ return LocalTime.ofSecondOfDay(seconds); }
 
 }
