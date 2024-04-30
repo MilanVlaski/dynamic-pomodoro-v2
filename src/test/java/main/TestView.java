@@ -1,16 +1,8 @@
-//package main;
-//
-//import static main.TestTimer._Work.Timeout.fourHours;
-//import static org.assertj.core.api.Assertions.assertThat;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import main.mocks.Counts;
-//import model.*;
-//import model.Work.SessionTooLong;
-//
-//public class TestView
-//{
+package main;
+
+public class TestView
+{
+
 //
 //
 //	@Test
@@ -89,5 +81,4 @@
 //		public boolean isWorking()
 //		{ return false; }
 //
-//	}
-//}
+}

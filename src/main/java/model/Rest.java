@@ -1,6 +1,6 @@
 package model;
 
-public class Rest
+public class Rest implements Countable
 {
 	private int seconds;
 	private Counter counter = new NullCounter();
@@ -19,6 +19,7 @@ public class Rest
 			counter.stop();
 	}
 
+	@Override
 	public void registerCounter(Counter counter)
 	{ this.counter = counter; }
 }
