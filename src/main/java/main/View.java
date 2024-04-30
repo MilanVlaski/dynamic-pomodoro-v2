@@ -2,13 +2,13 @@ package main;
 
 import java.time.LocalTime;
 
-import model.Counter;
-import model.Timer;
+import model.*;
 
 public class View
 {
 	private final Timer timer;
 	private final Counter counter;
+	private Work work;
 
 	private LocalTime time = LocalTime.MIN;
 
@@ -26,11 +26,26 @@ public class View
 
 	public void startWorking()
 	{
-		var work = timer.start();
+		// time should be set to zero here!
+		this.work = timer.start();
 		work.registerCounter(counter);
 		work.registerView(this);
 		counter.count(work);
 	}
+
+	public void startResting()
+	{
+		var rest = work.rest();
+		time = rest.time(); 
+		rest.registerView(this);
+		counter.count(rest);
+	}
+
+	public void finishRest()
+	{}
+
+	public void decrementByOneSecond()
+	{time = time.minusSeconds(1);}
 
 
 }

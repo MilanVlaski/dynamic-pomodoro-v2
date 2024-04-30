@@ -28,12 +28,4 @@ public class Work
 	public void registerView(View view)
 	{ this.view = view; }
 
-	public class NullView extends View
-	{
-
-		public NullView(Timer timer, Counter counter)
-		{ super(timer, counter); }
-
-	}
-
 }

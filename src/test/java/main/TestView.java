@@ -1,34 +1,73 @@
 package main;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import model.SingleCounter;
-import model.Timer;
+import main.mocks.Counts;
+import model.*;
 
 public class TestView
 {
 
+
 	@Test
 	void View_Time_Is_Zero_On_Init()
 	{
-		View view = new View(null, null);
+		var view = new View(null, null);
 		assertThat(view.time()).isEqualTo(LocalTime.MIN);
 	}
-	
+
 	@Test
 	void Work_starts_and_Increases_time_by_one_econd()
 	{
-		View view = new View(new Timer(), new SingleCounter());
+		var view = new View(new Timer(), new SingleCounter());
 		view.startWorking();
-		assertThat(view.time()).isEqualTo(LocalTime.MIN.plus(1, SECONDS));
+		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 1));
 	}
-	
-//
+
+	@Test
+	void Works_then_rests_Then_time_decreases()
+	{
+		var view = new View(new Timer(), new MultiCounter(new Counts().times(25),
+		                                                  new SingleCounter()));
+
+		view.startWorking();
+		view.startResting();
+
+		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 4));
+	}
+
+	public class MultiCounter implements Counter
+	{
+
+		private List<Counter> counters;
+		private int i;
+
+		public MultiCounter(Counter... counters)
+		{ this.counters = Arrays.asList(counters); }
+
+		@Override
+		public void count(Work work)
+		{ counters.get(i++).count(work); }
+
+		@Override
+		public void count(Rest rest)
+		{ counters.get(i++).count(rest); }
+
+		@Override
+		public void stop()
+		{ counters.get(i).stop(); }
+
+		@Override
+		public boolean isWorking()
+		{ return counters.get(i).isWorking(); }
+
+	}
 //
 //	@Test
 //	void Increments_Seconds_While_Working() throws SessionTooLong
