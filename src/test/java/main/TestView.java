@@ -1,8 +1,20 @@
 package main;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalTime;
+
+import org.junit.jupiter.api.Test;
+
 public class TestView
 {
 
+	@Test
+	void View_Time_Is_Zero()
+	{
+		View view = new View();
+		assertThat(view.time()).isEqualTo(LocalTime.MIN);
+	}
 //
 //
 //	@Test
