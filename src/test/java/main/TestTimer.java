@@ -80,14 +80,16 @@ public class TestTimer
 		void Seconds_Decrease()
 		{
 			Rest rest = new Rest(25);
-			assertThat(rest.decrementSeconds()).isEqualTo(4);
+			rest.decrementSeconds();
+			assertThat(rest.seconds()).isEqualTo(4);
 		}
 
 		@Test
 		void Seconds_Dont_Decrease_Past_Zero()
 		{
 			Rest rest = new Rest(0);
-			assertThat(rest.decrementSeconds()).isEqualTo(0);
+			rest.decrementSeconds();
+			assertThat(rest.seconds()).isEqualTo(0);
 		}
 
 		@Test
@@ -103,7 +105,7 @@ public class TestTimer
 			Rest rest = new Rest(5);
 			Counter counter = new Counts().times(2);
 			counter.count(rest);
-			assertThat(counter.isWorking()).isFalse();
+			assertThat(rest.seconds()).isEqualTo(0);
 		}
 	}
 
