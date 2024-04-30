@@ -1,7 +1,5 @@
 package model;
 
-import main.Director;
-
 public class SingleCounter implements Counter
 {
 
@@ -16,16 +14,8 @@ public class SingleCounter implements Counter
 	{ this.working = false; }
 
 	@Override
-	public void count(Rest rest, Director viewModel)
-	{
-		var seconds = rest.decrementSeconds();
-		viewModel.setSeconds(seconds);
-		if (seconds == 0)
-		{
-			viewModel.finishRest();
-			stop();
-		}
-	}
+	public void count(Rest rest)
+	{ rest.decrementSeconds(); }
 
 	@Override
 	public boolean isWorking()

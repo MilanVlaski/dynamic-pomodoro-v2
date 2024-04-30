@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.*;
 
 import main.mocks.Counts;
-import main.mocks.DummyDirector;
 import model.*;
-import model.Work.SessionTooLong;
 
 public class TestTimer
 {
@@ -25,21 +23,21 @@ public class TestTimer
 		{ assertThat(work.seconds()).isEqualTo(0); }
 
 		@Test
-		void Seconds_Increase() throws SessionTooLong
+		void Seconds_Increase()
 		{
 			work.incrementSeconds();
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
 		@Test
-		void Counts_Up_Once() throws SessionTooLong
+		void Counts_Up_Once()
 		{
 			new SingleCounter().count(work);
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
 		@Test
-		void Counts_Up_Twice() throws SessionTooLong
+		void Counts_Up_Twice()
 		{
 			Counter twiceCounter = new Counts().times(2);
 			twiceCounter.count(work);
@@ -68,7 +66,7 @@ public class TestTimer
 	class _Rest
 	{
 		@Test
-		void Lasts_Five_Seconds_After_Works_For_Twenty_Five() throws SessionTooLong
+		void Lasts_Five_Seconds_After_Works_For_Twenty_Five()
 		{
 			Counter twentyFiveCounter = new Counts().times(25);
 
@@ -104,7 +102,7 @@ public class TestTimer
 		{
 			Rest rest = new Rest(5);
 			Counter counter = new Counts().times(2);
-			counter.count(rest, new DummyDirector());
+			counter.count(rest);
 			assertThat(counter.isWorking()).isFalse();
 		}
 	}

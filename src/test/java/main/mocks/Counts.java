@@ -1,6 +1,5 @@
 package main.mocks;
 
-import main.Director;
 import model.*;
 
 public class Counts implements Counter
@@ -27,10 +26,10 @@ public class Counts implements Counter
 	}
 
 	@Override
-	public void count(Rest rest, Director viewModel)
+	public void count(Rest rest)
 	{
 		for (int i = 0; i < times; i++)
-			counter.count(rest, viewModel);
+			counter.count(rest);
 	}
 
 	@Override
