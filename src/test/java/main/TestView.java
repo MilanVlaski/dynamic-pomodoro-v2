@@ -1,20 +1,33 @@
 package main;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
+import model.SingleCounter;
+import model.Timer;
+
 public class TestView
 {
 
 	@Test
-	void View_Time_Is_Zero()
+	void View_Time_Is_Zero_On_Init()
 	{
-		View view = new View();
+		View view = new View(null, null);
 		assertThat(view.time()).isEqualTo(LocalTime.MIN);
 	}
+	
+	@Test
+	void Work_starts_and_Increases_time_by_one_econd()
+	{
+		View view = new View(new Timer(), new SingleCounter());
+		view.startWorking();
+		assertThat(view.time()).isEqualTo(LocalTime.MIN.plus(1, SECONDS));
+	}
+	
 //
 //
 //	@Test
