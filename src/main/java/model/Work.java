@@ -1,6 +1,6 @@
 package model;
 
-public class Work
+public class Work implements Countable
 {
 	private int seconds;
 	private Counter counter = new NullCounter();
@@ -18,6 +18,7 @@ public class Work
 	public Rest rest()
 	{ return new Rest(seconds); }
 
+	@Override
 	public void registerCounter(Counter counter)
 	{ this.counter = counter; }
 
