@@ -1,25 +1,15 @@
 package model;
 
 import main.Director;
-import model.Work.SessionTooLong;
 
 public class SingleCounter implements Counter
 {
 
-	private boolean working;
+	private boolean working = true;
 
 	@Override
-	public void count(Work work, Director viewModel) throws SessionTooLong
-	{
-		try
-		{
-			viewModel.setSeconds(work.incrementSeconds());
-		} catch (SessionTooLong e)
-		{
-			stop();
-			throw e;
-		}
-	}
+	public void count(Work work)
+	{ work.incrementSeconds(); }
 
 	@Override
 	public void stop()

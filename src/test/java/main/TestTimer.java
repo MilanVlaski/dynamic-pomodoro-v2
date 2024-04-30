@@ -1,7 +1,6 @@
 package main;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.*;
 
@@ -27,12 +26,15 @@ public class TestTimer
 
 		@Test
 		void Seconds_Increase() throws SessionTooLong
-		{ assertThat(work.incrementSeconds()).isEqualTo(1); }
+		{
+			work.incrementSeconds();
+			assertThat(work.seconds()).isEqualTo(1);
+		}
 
 		@Test
 		void Counts_Up_Once() throws SessionTooLong
 		{
-			new SingleCounter().count(work, new DummyDirector());
+			new SingleCounter().count(work);
 			assertThat(work.seconds()).isEqualTo(1);
 		}
 
@@ -40,7 +42,7 @@ public class TestTimer
 		void Counts_Up_Twice() throws SessionTooLong
 		{
 			Counter twiceCounter = new Counts().times(2);
-			twiceCounter.count(work, new DummyDirector());
+			twiceCounter.count(work);
 			assertThat(work.seconds()).isEqualTo(2);
 		}
 
@@ -50,30 +52,14 @@ public class TestTimer
 			public static int fourHours = 60 * 60 * 4;
 
 			@Test
-			void After_Four_Hours() throws SessionTooLong
-			{
-				Counter fourHourCounter = new Counts().times(fourHours);
-				assertThatExceptionOfType(SessionTooLong.class).isThrownBy(
-				        () -> fourHourCounter.count(work, new DummyDirector()));
-			}
-
-			@Test
 			void Stops_Seconds_From_Increasing_Past_Four_Hours()
 			{
 				int fiveHours = 60 * 60 * 5;
 				Counter fiveHourCounter = new Counts().times(fiveHours);
-				
-				assertThat(fiveHourCounter.isWorking()).isFalse();
-				
-				try
-				{
-					fiveHourCounter.count(work, new DummyDirector());
-				} catch (SessionTooLong e)
-				{
-					e.printStackTrace();
-				}
+
+				fiveHourCounter.count(work);
+
 				assertThat(work.seconds()).isEqualTo(fourHours);
-				assertThat(fiveHourCounter.isWorking()).isFalse();
 			}
 		}
 	}
@@ -87,7 +73,7 @@ public class TestTimer
 			Counter twentyFiveCounter = new Counts().times(25);
 
 			Work work = new Timer().start();
-			twentyFiveCounter.count(work, new DummyDirector());
+			twentyFiveCounter.count(work);
 			Rest rest = work.rest();
 			assertThat(rest.seconds()).isEqualTo(5);
 		}

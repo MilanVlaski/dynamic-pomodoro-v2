@@ -3,17 +3,19 @@ package model;
 public class Work
 {
 	private int seconds;
+	private Counter counter;
 
 	public int seconds()
 	{ return seconds; }
 
-	public int incrementSeconds() throws SessionTooLong
+	public void incrementSeconds()
 	{
 		seconds++;
 		if (seconds == 60 * 60 * 4)
-			throw new SessionTooLong();
-		else
-			return seconds;
+		{
+			if(counter != null)
+				counter.stop();
+		}
 	}
 
 	public Rest rest()
@@ -27,5 +29,9 @@ public class Work
 		SessionTooLong()
 		{ super("Session can't last more than four hours!"); }
 	}
+
+
+	public void registerCounter(Counter counter)
+	{ this.counter = counter; }
 
 }
