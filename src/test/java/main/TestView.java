@@ -55,15 +55,17 @@ public class TestView
 		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0, 4));
 	}
 
+	// TODO inject a View to check whether our view gets alerted
 	@Test
 	void Works_then_rests_then_rest_runs_out()
 	{
-		var view = new View(new Timer(), new MultiCounter(new Counts().times(25),
-		                                                  new Counts().times(5)));
 		
+		View view = new View(new Timer(), new MultiCounter(new Counts().times(25),
+		                                                   new Counts().times(5)));
+
 		view.startWorking();
 		view.startResting();
-		
+
 		assertThat(view.time()).isEqualTo(LocalTime.of(0, 0));
 	}
 

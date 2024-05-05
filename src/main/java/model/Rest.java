@@ -22,8 +22,10 @@ public class Rest
 			seconds--;
 			view.setTime(time());
 		}
-		else
+		else {
+			view.finishRest();
 			counter.stop();
+		}
 	}
 
 	public void registerCounter(Counter counter)
